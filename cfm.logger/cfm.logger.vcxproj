@@ -114,7 +114,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>C:\work\generic\CFM\cfm.api;C:\work\generic\CFM\cfm.engine;C:\work\generic\CFM\nanodbc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\cfm.api;..\nanodbc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -156,6 +156,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\cfm.api\cfm.api.vcxproj">
+      <Project>{f1213e21-6706-4ee5-a6a3-8e787bb1b1c6}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\nanodbc\nanodbc.vcxproj">
       <Project>{643476c7-e453-4349-ae13-295215582d37}</Project>
     </ProjectReference>

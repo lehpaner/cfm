@@ -15,7 +15,6 @@
 
 #include "ConfigParams.h"
 
-extern  cfm::application::CConfigParms cfmRegCfg;	/**< Registry Configuration to be removed */
 
 static std::string GetUTCTimeByLocalTime(std::string sDateTime) {
     std::string strDateTime;
@@ -493,14 +492,14 @@ namespace cfm::application {
         if (!IsConnected())
             return false;
 
-        if (!setIsMaster(cfmRegCfg.SARA_REGION_ID()))
+        if (!setIsMaster(CConfig::GetInstance()->CFM_REGION_ID()))
             return false;
 
         std::stringstream query(std::stringstream::in | std::stringstream::out);
         query << "SELECT S.Id, S.SystemAlias, S.Description, S.Deployment, SI.LocalDll, S.RealTimeContext, S.ThreadPriority, S.RemoteIPAddress, S.RemoteIPPort, S.SARARegionId, S.MaintenanceReq, S.SIDId FROM System AS S JOIN SID AS SI ON S.SIDId = SI.Id";
         if (!isMaster()) {
             query << " WHERE SARARegionId = ";
-            query << cfmRegCfg.SARA_REGION_ID();
+            query << CConfig::GetInstance()->CFM_REGION_ID();
         }
 
         try {
@@ -545,7 +544,7 @@ namespace cfm::application {
         query << sid;
         if (!isMaster()) {
             query << " AND SARARegionId = ";
-            query << cfmRegCfg.SARA_REGION_ID();
+            query << CConfig::GetInstance()->CFM_REGION_ID();
         }
         //deletes this system from vector of systems
         for (std::vector<domain::CfmSystem_Table>::iterator it = vSystemList.begin(); it != vSystemList.end(); it++)
@@ -603,7 +602,7 @@ namespace cfm::application {
         bool retval = false ;
         std::stringstream query(std::stringstream::in | std::stringstream::out);
         query << "select a.Id, a.Name, a.Description, AT.LocalDll, a.SARARegionId, a.AdaptersStatesId from Adapters as A join AdapterType as AT on  A.AdapterTypeId = AT.Id WHERE A.SARARegionId=";
-        query << cfmRegCfg.SARA_REGION_ID();
+        query << CConfig::GetInstance()->CFM_REGION_ID();
 
         try {
             auto result = nanodbc::execute(*syncConn, query.str());
@@ -1094,7 +1093,7 @@ namespace cfm::application {
 
         if (!isMaster()) {
             query << "SELECT LocalDll, Instances, LicenseKey from v_Licenses where SARARegionId="
-            << cfmRegCfg.SARA_REGION_ID();
+            << CConfig::GetInstance()->CFM_REGION_ID();
         } else
              query << "SELECT VL.LocalDll, L.Instances, L.LicenseKey from v_Licenses as VL, License as L, SID as S, "
                 << "SARARegion as SR "

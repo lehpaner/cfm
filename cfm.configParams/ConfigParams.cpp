@@ -23,13 +23,13 @@ int str2int(std::string sNumber) {
 namespace cfm::application {
 	//--------------------------------------------------------
 
-	CConfigParms::CConfigParms(void) {
+	CConfig::CConfig(const std::string& where) {
 		//Caricamento dati dal file INI
-		//DIEGO 28 04 2010
 		char fullPathName[512]; strcpy(fullPathName, "");
 		char* enginePath = getenv("ENGINE_PATH");
 		if (enginePath) strcat(fullPathName, enginePath);
-		strcat(fullPathName, "\\engine.ini");
+		else strcat(fullPathName, where.c_str());
+		strcat(fullPathName, "/config/cfm.ini");
 
 		this->iMAX_EVENT_DAYS = 20; //Default value
 		this->bDISPATCHSYSMESSAGES = false;
@@ -43,11 +43,11 @@ namespace cfm::application {
 		CSimpleIniA si(true, true, true);
 		int r = si.LoadFile(fullPathName);
 		if (!r) {
-			//SARA
-			if (si.GetValue("SARA", "SARA_ID"))
-				iSaraRegionId = str2int(si.GetValue("SARA", "SARA_ID"));
-			if (si.GetValue("SARA", "SARA_NAME"))
-				sSaraRegionName = si.GetValue("SARA", "SARA_NAME");
+			//CFM
+			if (si.GetValue("CFM", "CFM_ID"))
+				iCfmRegionId = str2int(si.GetValue("CFM", "CFM_ID"));
+			if (si.GetValue("CFM", "CFM_NAME"))
+				sCfmRegionName = si.GetValue("CFM", "CFM_NAME");
 
 			//DATABASE
 			if (si.GetValue("DATABASE", "DSN"))
@@ -122,10 +122,10 @@ namespace cfm::application {
 	}
 	//----------------------------------------------------------
 
-	CConfigParms::~CConfigParms(void) { }
+	CConfig::~CConfig(void) { }
 	//----------------------------------------------------------
 
-	std::string CConfigParms::Decrypt(std::string sEncryptedString) {
+	std::string CConfig::Decrypt(std::string sEncryptedString) {
 		char out[512];
 		unsigned long len = sizeof(out) - 1;
 

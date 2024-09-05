@@ -147,6 +147,7 @@
     <ClInclude Include="CategoryTypes.h" />
     <ClInclude Include="CfmApiMessages.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Messages.h" />
     <ClInclude Include="NetworkPacket.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Thread.h" />

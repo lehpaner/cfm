@@ -76,11 +76,6 @@ public:
     int GetRegionId() { return regionId; }
 };
 
-//CBaseEngine* getAModeInstance(int id);
-//CBaseEngine* getCModeInstance(int id) { return nullptr; }
-//CBaseEngine* getMasterInstance(int id) { return nullptr; }
-//CBaseEngine* getUModeInstance(int id) { return nullptr; }
-
 } //end namespace
 
 

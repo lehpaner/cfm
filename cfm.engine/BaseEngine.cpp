@@ -26,7 +26,6 @@ void _MBOX(wchar_t* sMessage, wchar_t* sCaption) {
 static bool ParseStandardArgs(int argc, char* argv) {
 	return false;
 }
-extern cfm::application::CConfigParms  cfmRegCfg;
 //---------------------------------------------------------------------
 
 namespace cfm::application {
@@ -40,7 +39,6 @@ namespace cfm::application {
 	CLogger* CBaseEngine::sLogger = nullptr;
 	DBManager* CBaseEngine::DBM = nullptr;
 	CEventManager* CBaseEngine::srk = nullptr;
-	CConfigParms saraRegCfg;
 
 	CBaseEngine::CBaseEngine(int id) {
 		std::map<int, CBaseEngine*>::iterator it;
@@ -64,7 +62,7 @@ namespace cfm::application {
 	}
 
 	CBaseEngine* CBaseEngine::getInstance() {
-		return getInstance(cfmRegCfg.SARA_REGION_ID());
+		return getInstance(CConfig::GetInstance()->CFM_REGION_ID());
 	}
 
 	int CBaseEngine::getInstancesSize() {
@@ -91,7 +89,7 @@ namespace cfm::application {
 
 	CBaseEngine* CBaseEngine::init(HINSTANCE hInstance, LPSTR lpCmdLine, int nCmdShow) {
 		tid = GetCurrentThreadId();
-		int regionId = saraRegCfg.SARA_REGION_ID();
+		int regionId = CConfig::GetInstance()->CFM_REGION_ID();
 
 		if (strcmp((char*)lpCmdLine, "-s") == 0) {
 			PostThreadMessage(tid, MAIN_START, 0, regionId);
@@ -204,7 +202,7 @@ namespace cfm::application {
 	void CBaseEngine::startDB() {
 		// Creo il DBManager e lo avvio
 		DBM = DBManager::getInstance();
-		DBM->SetConnectionParams(saraRegCfg.DBCONNECTION());
+		DBM->SetConnectionParams(CConfig::GetInstance()->DBCONNECTION());
 		DBM->Start();
 		Sleep(1000); // Forse non serve...provare
 		DBM->Connect();
@@ -233,7 +231,7 @@ namespace cfm::application {
 		DispatchMessage(&msg);
 
 		if (!msg.lParam)
-			msg.lParam = saraRegCfg.SARA_REGION_ID();
+			msg.lParam = CConfig::GetInstance()->CFM_REGION_ID();
 
 		return getInstance(msg.lParam);
 	}
@@ -481,7 +479,7 @@ namespace cfm::application {
 
 		CComunicationAdapterMonitor::getInstance()->Start();
 
-		int regionId = saraRegCfg.SARA_REGION_ID();
+		int regionId = CConfig::GetInstance()->CFM_REGION_ID();
 
 		//// Avvio del ThSIDMonitor
 		CDeviceMonitor* thSidMon = CDeviceMonitor::getInstance(regionId, true);

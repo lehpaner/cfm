@@ -13,7 +13,6 @@
 #include "Messages.h"
 #include "Logger.h"
 
-extern  cfm::application::CConfigParms cfmRegCfg;	/**< Sara Registry Configuration */
 
 cfm::application::CComunicationAdapterMonitor* cfm::application::CComunicationAdapterMonitor::smInstance = nullptr;
 namespace cfm::application {
@@ -104,9 +103,9 @@ namespace cfm::application {
 	  */
 	DWORD CComunicationAdapterMonitor::Run(LPVOID /* arg */) {
 		//Ogni SID_PING_TIME si richiede il keepalive dai SID
-		SetTimer(NULL, TIMER_CCOMM_WATCHDOG,cfmRegCfg.SID_PING_TIME(), CComunicationAdapterMonitor::PingTimerProc);
+		SetTimer(NULL, TIMER_CCOMM_WATCHDOG, CConfig::GetInstance()->SID_PING_TIME(), CComunicationAdapterMonitor::PingTimerProc);
 		//Ogni SID_VERIFY_TIME si verifica quali sono i SID realmente in runnign
-		SetTimer(NULL, TIMER_CCOMM_VERIFY, cfmRegCfg.SID_VERIFY_TIME(), CComunicationAdapterMonitor::VerifyTimerProc);
+		SetTimer(NULL, TIMER_CCOMM_VERIFY, CConfig::GetInstance()->SID_VERIFY_TIME(), CComunicationAdapterMonitor::VerifyTimerProc);
 
 		int res;
 		std::map<int, CfmCommAdapterHandleMap*>::iterator it;

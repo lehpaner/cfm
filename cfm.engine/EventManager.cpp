@@ -10,8 +10,6 @@
 #include "DatabaseManager.h"
 #include "ConfigParams.h"
 
-extern cfm::application::CConfigParms cfmRegCfg;
-
 namespace cfm::application {
 	//Per rendere visibile il thread a KERNEL
 	int EventManagerId = 0;			/**< Utilizzata dai Category Manager */
@@ -49,8 +47,8 @@ namespace cfm::application {
 		sLogger->BindEventManagerId(EventManagerId);
 //Pekmez		IdThEventManager = EventManagerId;
 
-		bool bRestoreAfterScan = (cfmRegCfg.RESTORE_AFTER_SCAN()) ? true : false;
-		std::string region = "1"; //IntToStr(saraRegCfg.SARA_REGION_ID());
+		bool bRestoreAfterScan = (CConfig::GetInstance()->RESTORE_AFTER_SCAN()) ? true : false;
+		std::string region = "6"; //IntToStr(CConfig::GetInstance()->SARA_REGION_ID());
 
 		//--------------------------------------------------------------------------
 		//Ciclo principale del Thread in cui ci si mette in ascolto dei messaggi

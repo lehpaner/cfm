@@ -6,7 +6,7 @@
 * Instance exchange monitor is 4 echange engine2engine messages
 *
 \***************************************************************************/
-
+#include "framework.h"
 #include "CfmMonitor.h"
 #include "BaseEngine.h"
 #include "Messages.h"
@@ -104,8 +104,8 @@ namespace cfm::application {
 
             return;
         }
-        std::string sClientName = "Localhost";//GetRemoteHostname();
-        std::string sHostName = "Localhost"; // Utility::GetLocalHostname();
+        std::string sClientName = "localhost"; // GetRemoteHostname();
+        std::string sHostName = "localhost"; // Utility::GetLocalHostname();
         Send("***********************************************************\n\n\r");
         Send("Welcome in CFM 2.0.0\r\n");
         Send("CFM Ag - Copyright 20XX\r\n\r\n");
@@ -331,7 +331,7 @@ namespace cfm::application {
             Send("Command not supported on regional.\r\n");
             return;
         }
-        int myRegionId = cfmRegCfg.SARA_REGION_ID();
+        int myRegionId = CConfig::GetInstance()->CFM_REGION_ID();
         char buff[256];
         char buff2[128];
         if (!DBM->getRegionList()) {

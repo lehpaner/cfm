@@ -6,6 +6,7 @@
 * application. CFMService is derived from base service.
 *
 \***************************************************************************/
+#include "framework.h"
 #include "Logger.h"
 //#include "DatabaseManager.h"
 //#include "BaseEngine.h"
@@ -146,7 +147,6 @@ namespace cfm::application {
 				PostThreadMessage(this->m_ThreadCtx.m_dwTID, SL_LOG_SID_MESSAGE, (WPARAM)logBuffer, sm->SIDUID);
 			else
 				PostThreadMessage(this->m_ThreadCtx.m_dwTID, SL_LOG_CRITICAL_MESSAGE, (WPARAM)logBuffer, sm->SIDUID);
-
 			delete sm; //allocato dalla callback legata al SID
 		} catch (std::exception& e) {
 			e.what();
@@ -154,6 +154,8 @@ namespace cfm::application {
 				delete sm;
 		}
 	}
+				
+
 
 	//Pubblica (OVERLOAD del metodo Log, LOG di errori dai SID)
 	void CLogger::Log(SystemError* se) {

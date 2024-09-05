@@ -22,7 +22,6 @@ BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 //------------------------------------------------------------------------------
-cfm::application::CConfigParms  cfmRegCfg;
 int IdThEventManager = 0;
 cfm::application::CLogger* sLogger = nullptr;
 cfm::application::CBaseEngine* p = nullptr;
@@ -53,10 +52,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     MSG msg;
 
     // Main message loop:
-    while (GetMessage(&msg, nullptr, 0, 0))
-    {
-        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
-        {
+    while (GetMessage(&msg, nullptr, 0, 0)) {
+        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg)) {
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }
@@ -72,8 +69,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 //
 //  PURPOSE: Registers the window class.
 //
-ATOM MyRegisterClass(HINSTANCE hInstance)
-{
+ATOM MyRegisterClass(HINSTANCE hInstance) {
     WNDCLASSEXW wcex;
 
     wcex.cbSize = sizeof(WNDCLASSEX);
@@ -103,15 +99,16 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 //        In this function, we save the instance handle in a global variable and
 //        create and display the main program window.
 //
-BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
-{
+BOOL InitInstance(HINSTANCE hInstance, int nCmdShow) {
    hInst = hInstance; // Store instance handle in our global variable
 
    HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
       CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 
    if (!hWnd) { return FALSE; }
-   sLogger = cfm::application::CLogger::createInstance(NULL, 5/*araRegCfg.DBG_LEVEL()*/);
+
+   cfm::application::CConfig::Construct("C:/work/CapDevicces/cfm/x64/Debug");
+   sLogger = cfm::application::CLogger::createInstance(NULL, cfm::application::CConfig::GetInstance()->DBG_LEVEL());
    sLogger->Start();
 
    if (!(p = cfm::application::CBaseEngine::init(hInstance, (LPSTR)"-a", nCmdShow)))

@@ -10,14 +10,18 @@
 
 #include "framework.h"
 #include "WinReg.h"
+#include "singleton.h"
 
 namespace cfm::application {
 
-	class CConfigParms {
+	class CConfig: public common::Singleton<CConfig> {
+
 	private:
+
 		std::string sDSN;
 		std::string sDBUSER;
 		std::string sDBPASSWORD;
+		std::string sDBCONNECTION;
 		int			iDEBUG_LEVEL;
 		bool		bLOG_ON_DB;
 		bool		bLOG_ON_FILE;
@@ -32,8 +36,8 @@ namespace cfm::application {
 		int			iCHECKLOGIN_TIME;
 		bool		bTRAYICONBEEP;
 		bool		bIsMaster;
-		int			iSaraRegionId;
-		std::string sSaraRegionName;
+		int			iCfmRegionId;
+		std::string sCfmRegionName;
 		int         iSIDMON_TIME;
 		int			iFAILOVER_TIME;
 		int			iPOLLING_TIME;
@@ -41,18 +45,18 @@ namespace cfm::application {
 		int			iONE_PING_TIME;
 		std::string sFAILOVER_PASSWORD;
 		int			iMAX_EVENT_DAYS;
-		bool     bDISPATCHSYSMESSAGES;
+		bool		bDISPATCHSYSMESSAGES;
 		int			iMAXPOSTBUFFER;
 		int			iHOUR;
 		int			iMINUTE;
 		HKEY		HKEY_ROOT;	 /**< registry root, e.g.HKEY_LOCAL_MACHINE					*/
-		std::string	sParentKey;  /**< registry subfolder path, e.g. "/SOFTWARE/I&SI/SARA/"	*/
+		std::string	sParentKey;  /**< registry subfolder path, e.g. "/SOFTWARE/CFM/CFM/"	*/
 		CWindowsRegister* saraCfg;
 
 		std::string Decrypt(std::string sEncryptedString);
 	public:
-		CConfigParms(void);
-		~CConfigParms(void);
+		CConfig(const std::string& home);
+		~CConfig(void);
 		std::string DSN() { return sDSN; };
 		std::string DBUSER() { return sDBUSER; };
 		std::string DBPASSWORD() { return sDBPASSWORD; };
@@ -70,8 +74,8 @@ namespace cfm::application {
 		int			CHECKLOGIN_TIME() { return iCHECKLOGIN_TIME; };
 		bool		RESTORE_AFTER_SCAN() { return bRESTORE_AFTER_SCAN; };
 		bool		TRAY_ICON_BEEP() { return bTRAYICONBEEP; };
-		std::string SARA_REGION_NAME() { return sSaraRegionName; };
-		int			SARA_REGION_ID() { return iSaraRegionId; };
+		std::string CFM_REGION_NAME() { return sCfmRegionName; };
+		int			CFM_REGION_ID() { return iCfmRegionId; };
 		int			SIDMON_TIME() { return iSIDMON_TIME; };
 		int			FAILOVER_TIME() { return iFAILOVER_TIME; };
 		int			POLLING_TIME() { return iPOLLING_TIME; };

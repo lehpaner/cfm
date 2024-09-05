@@ -104,7 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\work\generic\CFM\cfm.logger;C:\work\generic\CFM\cfm.api;C:\work\generic\CFM\cfm.engine;C:\work\generic\CFM\nanodbc;C:\work\generic\CFM\cfm.configParams;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\cfm.logger;..\cfm.api;..\cfm.engine;..\nanodbc;..\cfm.configParams;..\cfm.common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
@@ -149,6 +149,9 @@
   <ItemGroup>
     <ProjectReference Include="..\cfm.api\cfm.api.vcxproj">
       <Project>{f1213e21-6706-4ee5-a6a3-8e787bb1b1c6}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\cfm.common\cfm.common.vcxproj">
+      <Project>{707ece5d-f1e7-47c2-b6da-263ecb9a0718}</Project>
     </ProjectReference>
     <ProjectReference Include="..\cfm.configParams\cfm.configParams.vcxproj">
       <Project>{ad5ad422-a100-4c99-8a9e-b2056bcc840b}</Project>

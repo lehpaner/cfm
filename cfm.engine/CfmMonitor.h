@@ -17,10 +17,6 @@
 #include "Parse.h"
 #include <set>
 
-//------------------------------------------------------------------------------------
-extern  cfm::application::CConfigParms cfmRegCfg;	/**< CFM Registry Configuration */
-// Remove legacy mutex
-//------------------------------------------------------------------------------------
 
 namespace cfm::application {
     /***
